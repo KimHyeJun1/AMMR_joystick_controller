@@ -2,8 +2,20 @@
 
 JoystickControllerNode::JoystickControllerNode() : Node("joystick_controller_node"), 
     data_processor_(&udp_reading_) {
-    udp_reading_.socketOpen();
-    RCLCPP_INFO(this->get_logger(), "socket is opened");
+    this->declare_parameter<std::string>("joystick_ip", "192.168.31.96");
+    this->declare_parameter<int>("joystick_port", 52922);
+    this->declare_parameter<float>("max_vel_x", 1.0);
+    this->declare_parameter<float>("max_vel_y", 1.0);
+    this->declare_parameter<float>("max_vel_z", 1.0);
+
+    joystick_ip_ = this->get_parameter("joystick_ip").as_string();
+    joystick_port_ = this->get_parameter("joystick_port").as_int();
+    max_vel_x_ = this->get_parameter("max_vel_x").as_double();
+    max_vel_y_ = this->get_parameter("max_vel_y").as_double();
+    max_vel_z_ = this->get_parameter("max_vel_z").as_double();
+
+    udp_reading_.socketOpen(joystick_ip_, joystick_port_);
+    RCLCPP_INFO(this->get_logger(), "joystick_ip : %s, joystick_port : %d socket is opened", joystick_ip_, joystick_port_);
 
     udp_thread_ = std::thread(&UdpReadingThread::loop, &udp_reading_);
 
@@ -16,7 +28,7 @@ JoystickControllerNode::JoystickControllerNode() : Node("joystick_controller_nod
 void JoystickControllerNode::manual_vel_pub_callback() {
     auto msg = geometry_msgs::msg::Twist();
 
-    data_processor_.joy_xy_to_vel_mapping();
+    data_processor_.joy_xy_to_vel_mapping(max_vel_x_, max_vel_y_, max_vel_z_);
 
     float vel_x = data_processor_.manual_vel_x_;
     float vel_y = data_processor_.manual_vel_y_;
@@ -59,10 +71,17 @@ void JoystickControllerNode::manual_vel_pub_callback() {
         }
         break;
     default:
+        msg.linear.x = 0;
+        msg.linear.y = 0;
+        msg.linear.z = 0;
+        msg.angular.x = 0;
+        msg.angular.y = 0;
+        msg.angular.z = 0;
         break;
     }
 
-    RCLCPP_INFO(this->get_logger(), "vel_x: %f, vel_z: %f", vel_x, vel_z);
+    // RCLCPP_INFO(this->get_logger(), "vel_x: %f, vel_z: %f", vel_x, vel_z);
+    RCLCPP_INFO(this->get_logger(), "lin_x: %f, lin_y: %f, ang_z: %f", msg.linear.x, msg.linear.y, msg.angular.z);
     manual_vel_pub_->publish(msg);
 }
 

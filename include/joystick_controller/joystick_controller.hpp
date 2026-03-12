@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <chrono>
+#include <string>
 #include <rclcpp/rclcpp.hpp>
 #include <geometry_msgs/msg/twist.hpp>
 #include <joystick_controller/udp_read_thread.hpp>
@@ -17,6 +18,12 @@ class JoystickControllerNode : public rclcpp::Node {
             CURVE,
             CRAB
         };
+
+        std::string joystick_ip_;
+        int joystick_port_;
+        float max_vel_x_;
+        float max_vel_y_;
+        float max_vel_z_;
 
         DrivingMode current_driving_mode_;
 

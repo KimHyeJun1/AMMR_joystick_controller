@@ -14,7 +14,7 @@ class UdpReadingThread {
 
         int sock_;
         
-        int socketOpen();
+        int socketOpen(std::string ip, int port);
         void socketClose();
         void loop();
 

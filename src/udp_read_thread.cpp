@@ -2,7 +2,7 @@
 
 UdpReadingThread::UdpReadingThread() {};
 
-int UdpReadingThread::socketOpen()
+int UdpReadingThread::socketOpen(std::string ip, int port)
 {
     sock_ = socket(AF_INET, SOCK_DGRAM, 0);
 
@@ -11,7 +11,7 @@ int UdpReadingThread::socketOpen()
 
     sockaddr_in addr{};
     addr.sin_family = AF_INET;
-    addr.sin_port = htons(52922);
+    addr.sin_port = htons(port);
     addr.sin_addr.s_addr = INADDR_ANY;
 
     if(bind(sock_, (sockaddr*)&addr, sizeof(addr)) < 0)
@@ -20,7 +20,7 @@ int UdpReadingThread::socketOpen()
         return -1;
     }
 
-    std::cout << "UDP bind success : 52922" << std::endl;
+    std::cout << "UDP bind success : " << port << std::endl;
 
     return sock_;
 }

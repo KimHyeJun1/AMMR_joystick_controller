@@ -1,0 +1,14 @@
+#----------------------------------------------------------------------
+#  SeoJin System AMMR Joystick Controller ROS2 Parameter  
+#----------------------------------------------------------------------
+#  Source   : joystick_controller.yaml                                 
+#  Author   : Hye Jun Kim                                                                                                    
+#----------------------------------------------------------------------
+
+joystick_controller_node:
+  ros__parameters:
+    joystick_ip: "192.168.31.96"
+    joystick_port: 52922
+    max_vel_x: 1.0
+    max_vel_y: 1.0
+    max_vel_z: 1.0
