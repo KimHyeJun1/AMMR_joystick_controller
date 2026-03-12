@@ -6,6 +6,7 @@
 #include <thread>
 #include <iostream>
 #include <atomic>
+#include <rclcpp/rclcpp.hpp>
 
 class UdpReadingThread {
     public:

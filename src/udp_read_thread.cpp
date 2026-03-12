@@ -36,7 +36,7 @@ void UdpReadingThread::loop()
     sockaddr_in client;
     socklen_t len = sizeof(client);
 
-    while(true)
+    while(rclcpp::ok())
     {
         int n = recvfrom(sock_, buffer, sizeof(buffer), 0,
                          (sockaddr*)&client, &len);
