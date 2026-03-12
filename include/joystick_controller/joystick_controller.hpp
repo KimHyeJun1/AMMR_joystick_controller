@@ -16,7 +16,8 @@ class JoystickControllerNode : public rclcpp::Node {
         enum class DrivingMode {
             STAY,
             CURVE,
-            CRAB
+            CRAB,
+            ROTATE
         };
 
         std::string joystick_ip_;
