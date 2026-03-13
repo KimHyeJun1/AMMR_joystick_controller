@@ -14,6 +14,7 @@ class JoystickControllerNode : public rclcpp::Node {
 
     private :
         enum class DrivingMode {
+            MANULFINISH,
             STAY,
             CURVE,
             CRAB,
@@ -25,6 +26,9 @@ class JoystickControllerNode : public rclcpp::Node {
         float max_vel_x_;
         float max_vel_y_;
         float max_vel_z_;
+        float accel_lin_;
+        float accel_ang_;
+        float dt_;
 
         DrivingMode current_driving_mode_;
 

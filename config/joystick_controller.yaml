@@ -12,3 +12,6 @@ joystick_controller_node:
     max_vel_x: 1.0
     max_vel_y: 1.0
     max_vel_z: 1.0
+    accel_lin: 1.0
+    accel_ang: 1.0
+    dt: 0.02
