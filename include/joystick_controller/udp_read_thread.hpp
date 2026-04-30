@@ -6,6 +6,7 @@
 #include <thread>
 #include <iostream>
 #include <atomic>
+#include <mutex>
 #include <rclcpp/rclcpp.hpp>
 
 class UdpReadingThread {
@@ -23,6 +24,7 @@ class UdpReadingThread {
         std::atomic<int16_t> joystick_y_;
         std::atomic<uint16_t> joystick_btn_;
 
+        std::mutex joystick_mutex_;
     private:
         
 };

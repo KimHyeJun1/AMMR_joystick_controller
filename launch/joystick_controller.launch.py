@@ -10,9 +10,9 @@ from launch_ros.substitutions import FindPackageShare
 from launch_ros.actions import Node
 
 config_file = PathJoinSubstitution([
-    FindPackageShare("charging_station"),
+    FindPackageShare("joystick_controller"),
     "config",
-    "charger_manager.yaml"
+    "joystick_controller.yaml"
 ])
 
 def generate_launch_description():

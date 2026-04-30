@@ -31,6 +31,7 @@ void UdpReadingThread::socketClose() {
 
 void UdpReadingThread::loop()
 {
+    std::lock_guard<std::mutex> lock(joystick_mutex_);
     char buffer[1024];
 
     sockaddr_in client;
@@ -47,8 +48,9 @@ void UdpReadingThread::loop()
             sendto(sock_, reply, 2, 0, (sockaddr*)&client, len);    // answer hello from server to client
 
         } else if (buffer[0] == 0x03) {
-            static uint8_t seq = 2;
-            uint8_t reply[2] = {0x02, seq++};
+            // static uint8_t seq = 2;
+            static uint8_t seq = buffer[1];
+            uint8_t reply[2] = {0x02, seq += 1};
             sendto(sock_, reply, 2, 0, (sockaddr*)&client, len);
 
             //joystick

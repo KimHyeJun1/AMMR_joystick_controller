@@ -4,8 +4,10 @@
 #include <string>
 #include <rclcpp/rclcpp.hpp>
 #include <geometry_msgs/msg/twist.hpp>
+#include <std_msgs/msg/bool.hpp>
 #include <joystick_controller/udp_read_thread.hpp>
 #include <joystick_controller/data_processor.hpp>
+#include <joystick_controller/driving_mode.hpp>
 
 class JoystickControllerNode : public rclcpp::Node {
     public :
@@ -13,14 +15,6 @@ class JoystickControllerNode : public rclcpp::Node {
         ~JoystickControllerNode();
 
     private :
-        enum class DrivingMode {
-            MANULFINISH,
-            STAY,
-            CURVE,
-            CRAB,
-            ROTATE
-        };
-
         std::string joystick_ip_;
         int joystick_port_;
         float max_vel_x_;
@@ -29,10 +23,12 @@ class JoystickControllerNode : public rclcpp::Node {
         float accel_lin_;
         float accel_ang_;
         float dt_;
+        bool manual_mode_msg_;
 
         DrivingMode current_driving_mode_;
 
         rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr manual_vel_pub_;
+        rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr manual_mode_sub_;
 
         rclcpp::TimerBase::SharedPtr manual_vel_timer_;
         std::thread udp_thread_;
@@ -41,6 +37,7 @@ class JoystickControllerNode : public rclcpp::Node {
         DataProcessor data_processor_;
 
         void manual_vel_pub_callback();
+        void manual_mode_sub_callback(const std_msgs::msg::Bool::SharedPtr msg);
         void set_driving_mode_status(DrivingMode new_driving_mode);
         void switch_driving_mode();
 

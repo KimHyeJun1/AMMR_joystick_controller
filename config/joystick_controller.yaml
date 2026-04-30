@@ -7,7 +7,7 @@
 
 joystick_controller_node:
   ros__parameters:
-    joystick_ip: "192.168.10.100"
+    joystick_ip: "192.168.10.67"
     joystick_port: 52922
     max_vel_x: 1.0
     max_vel_y: 1.0

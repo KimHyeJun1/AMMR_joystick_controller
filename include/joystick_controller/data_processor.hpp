@@ -1,7 +1,8 @@
 #pragma once
 #include <atomic>
+#include <cmath>
 #include <joystick_controller/udp_read_thread.hpp>
-
+#include <joystick_controller/driving_mode.hpp>
 class DataProcessor {
     public:
         DataProcessor(UdpReadingThread* udp_thread);
@@ -10,7 +11,9 @@ class DataProcessor {
         std::atomic<float> manual_vel_y_;
         std::atomic<float> manual_vel_z_;
 
-        void joy_xy_to_vel_mapping(const float max_vel_x, const float max_vel_y, const float max_vel_z);
+        DrivingMode current_mode_;
+
+        void joy_xy_to_vel_mapping(const float max_vel_x, const float max_vel_y, const float max_vel_z, DrivingMode mode);
         void update_velocity(const float accel_lin, const float accel_ang, const float dt);
 
     private:
