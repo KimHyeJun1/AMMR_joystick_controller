@@ -38,7 +38,7 @@ JoystickControllerNode::JoystickControllerNode() : Node("joystick_controller_nod
 
 void JoystickControllerNode::manual_mode_sub_callback (const std_msgs::msg::Bool::SharedPtr msg) {
     manual_mode_msg_ = msg->data;
-    RCLCPP_INFO(this->get_logger(), "manual_mode's msg %d", manual_mode_msg_);
+    RCLCPP_DEBUG(this->get_logger(), "manual_mode's msg %d", manual_mode_msg_);
 }
 
 void JoystickControllerNode::manual_vel_pub_callback() {
@@ -147,11 +147,11 @@ void JoystickControllerNode::manual_vel_pub_callback() {
         //     break;
         // }
 
-        // RCLCPP_INFO(this->get_logger(), "vel_x: %f, vel_z: %f", vel_x, vel_z);
+        // RCLCPP_DEBUG(this->get_logger(), "vel_x: %f, vel_z: %f", vel_x, vel_z);
         if (current_driving_mode_ == DrivingMode::MANULFINISH) {
-            // RCLCPP_INFO(this->get_logger(), "manual mode finished.");
+            RCLCPP_DEBUG(this->get_logger(), "manual mode finished.");
         } else {
-            // RCLCPP_INFO(this->get_logger(), "lin_x: %f, lin_y: %f, ang_z: %f", msg.linear.x, msg.linear.y, msg.angular.z);
+            // RCLCPP_DEBUG(this->get_logger(), "lin_x: %f, lin_y: %f, ang_z: %f", msg.linear.x, msg.linear.y, msg.angular.z);
             manual_vel_pub_->publish(msg);
         }
     // } else {
@@ -173,55 +173,55 @@ void JoystickControllerNode::set_driving_mode_status(DrivingMode new_driving_mod
 void JoystickControllerNode::switch_driving_mode() {
     switch (udp_reading_.joystick_btn_) {
     // case 1:
-    //     RCLCPP_INFO(this->get_logger(), "joystick button selected");
+    //     RCLCPP_DEBUG(this->get_logger(), "joystick button selected");
     //     break;
     case 2:
         set_driving_mode_status(DrivingMode::MANULFINISH);
-        // RCLCPP_INFO(this->get_logger(), "- button selected");
-        RCLCPP_INFO(this->get_logger(), "Driving Mode : MANUALFINISH");
+        // RCLCPP_DEBUG(this->get_logger(), "- button selected");
+        RCLCPP_DEBUG(this->get_logger(), "Driving Mode : MANUALFINISH");
         break;
     // case 4:
-    //     RCLCPP_INFO(this->get_logger(), "+ button selected");
+    //     RCLCPP_DEBUG(this->get_logger(), "+ button selected");
     //     break;
     // case 8:
-    //     RCLCPP_INFO(this->get_logger(), "grid button selected");
+    //     RCLCPP_DEBUG(this->get_logger(), "grid button selected");
     //     break;
     // case 16:
-    //     RCLCPP_INFO(this->get_logger(), "jogging button selected");
+    //     RCLCPP_DEBUG(this->get_logger(), "jogging button selected");
     //     break;
     case 32:
         set_driving_mode_status(DrivingMode::STAY);
-        // RCLCPP_INFO(this->get_logger(), "f1 button selected");
-        RCLCPP_INFO(this->get_logger(), "Driving Mode : STAY");
+        // RCLCPP_DEBUG(this->get_logger(), "f1 button selected");
+        RCLCPP_DEBUG(this->get_logger(), "Driving Mode : STAY");
         break;
     case 64:
         set_driving_mode_status(DrivingMode::CURVE);
-        // RCLCPP_INFO(this->get_logger(), "f2 button selected");
-        RCLCPP_INFO(this->get_logger(), "Driving Mode : CURVE");
+        // RCLCPP_DEBUG(this->get_logger(), "f2 button selected");
+        RCLCPP_DEBUG(this->get_logger(), "Driving Mode : CURVE");
         break;
     case 128:
         set_driving_mode_status(DrivingMode::CRAB);
-        // RCLCPP_INFO(this->get_logger(), "f3 button selected");
-        RCLCPP_INFO(this->get_logger(), "Driving Mode : CRAB");
+        // RCLCPP_DEBUG(this->get_logger(), "f3 button selected");
+        RCLCPP_DEBUG(this->get_logger(), "Driving Mode : CRAB");
         break;
     case 256:
         set_driving_mode_status(DrivingMode::ROTATE);
-        // RCLCPP_INFO(this->get_logger(), "f4 button selected");
-        RCLCPP_INFO(this->get_logger(), "Driving Mode : ROTATE");
+        // RCLCPP_DEBUG(this->get_logger(), "f4 button selected");
+        RCLCPP_DEBUG(this->get_logger(), "Driving Mode : ROTATE");
         break;
     // case 512:
-    //     RCLCPP_INFO(this->get_logger(), "나침반 button selected");
+    //     RCLCPP_DEBUG(this->get_logger(), "나침반 button selected");
     //     break;
     // case 1024:
-    //     RCLCPP_INFO(this->get_logger(), "나침반2 button selected");
+    //     RCLCPP_DEBUG(this->get_logger(), "나침반2 button selected");
     //     break;
     default:
         // if (current_driving_mode_ == DrivingMode::STAY) {
-        //     RCLCPP_INFO(this->get_logger(), "1");
+        //     RCLCPP_DEBUG(this->get_logger(), "1");
         // } else if (current_driving_mode_ == DrivingMode::CURVE) {
-        //     RCLCPP_INFO(this->get_logger(), "2");
+        //     RCLCPP_DEBUG(this->get_logger(), "2");
         // } else {
-        //     RCLCPP_INFO(this->get_logger(), "3");
+        //     RCLCPP_DEBUG(this->get_logger(), "3");
         // }
         break;
     }

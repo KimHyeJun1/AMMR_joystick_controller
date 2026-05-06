@@ -22,5 +22,7 @@ def generate_launch_description():
             executable='joystick_controller_node',
             name='joystick_controller_node',
             parameters=[config_file],
-            output='screen'),
+            output='screen',
+            # arguments=['--ros-args', '--log-level', 'DEBUG'] # 로그 필요할 때 주석해제 후 로그 볼 수 있음.
+            )
     ])
