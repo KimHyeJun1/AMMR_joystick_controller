@@ -73,9 +73,10 @@ void JoystickControllerNode::speed_level_btn_callback() {
             }
             break;
         default:
+            current_speed_level_btn_status_ = false;
             break;
     }
-    current_speed_level_btn_status_ = false;
+    prev_speed_level_btn_status_ = current_speed_level_btn_status_;
 }
 
 void JoystickControllerNode::manual_mode_sub_callback (const std_msgs::msg::Bool::SharedPtr msg) {
