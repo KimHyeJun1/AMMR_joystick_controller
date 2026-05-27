@@ -91,9 +91,9 @@ void JoystickControllerNode::manual_vel_pub_callback() {
         data_processor_.joy_xy_to_vel_mapping(max_vel_x_, max_vel_y_, max_vel_z_, current_driving_mode_);
         data_processor_.update_velocity(accel_lin_, accel_ang_, dt_);
 
-        float vel_x = data_processor_.manual_vel_x_ * (speed_level_ / 10);
-        float vel_y = data_processor_.manual_vel_y_ * (speed_level_ / 10);
-        float vel_z = data_processor_.manual_vel_z_ * (speed_level_ / 10);
+        float vel_x = data_processor_.manual_vel_x_ * (speed_level_ / 10.0);
+        float vel_y = data_processor_.manual_vel_y_ * (speed_level_ / 10.0);
+        float vel_z = data_processor_.manual_vel_z_ * (speed_level_ / 10.0);
 
         switch_driving_mode();
 
