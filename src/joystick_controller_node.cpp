@@ -34,7 +34,7 @@ JoystickControllerNode::JoystickControllerNode() : Node("joystick_controller_nod
 
     manual_vel_timer_ = this->create_wall_timer(std::chrono::milliseconds(20), std::bind(&JoystickControllerNode::manual_vel_pub_callback, this));
 
-    speed_level_btn_timer_ = this->create_wall_timer(std::chrono::milliseconds(500), std::bind(&JoystickControllerNode::speed_level_btn_callback, this));
+    speed_level_btn_timer_ = this->create_wall_timer(std::chrono::milliseconds(20), std::bind(&JoystickControllerNode::speed_level_btn_callback, this));
 }
 
 void JoystickControllerNode::speed_level_btn_callback() {
