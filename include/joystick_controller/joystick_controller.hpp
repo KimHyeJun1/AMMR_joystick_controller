@@ -24,6 +24,8 @@ class JoystickControllerNode : public rclcpp::Node {
         float accel_ang_;
         float dt_;
         bool manual_mode_msg_;
+        bool prev_speed_level_btn_status_ = false;
+        int speed_level_ = 5;
 
         DrivingMode current_driving_mode_;
 
@@ -31,6 +33,7 @@ class JoystickControllerNode : public rclcpp::Node {
         rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr manual_mode_sub_;
 
         rclcpp::TimerBase::SharedPtr manual_vel_timer_;
+        rclcpp::TimerBase::SharedPtr speed_level_btn_timer_;
         std::thread udp_thread_;
         
         UdpReadingThread udp_reading_;
@@ -38,6 +41,7 @@ class JoystickControllerNode : public rclcpp::Node {
 
         void manual_vel_pub_callback();
         void manual_mode_sub_callback(const std_msgs::msg::Bool::SharedPtr msg);
+        void speed_level_btn_callback();
         void set_driving_mode_status(DrivingMode new_driving_mode);
         void switch_driving_mode();
 

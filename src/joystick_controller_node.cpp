@@ -34,6 +34,48 @@ JoystickControllerNode::JoystickControllerNode() : Node("joystick_controller_nod
 
     manual_vel_timer_ = this->create_wall_timer(std::chrono::milliseconds(20), std::bind(&JoystickControllerNode::manual_vel_pub_callback, this));
 
+    speed_level_btn_timer_ = this->create_wall_timer(std::chrono::milliseconds(500), std::bind(&JoystickControllerNode::manual_vel_pub_callback, this));
+}
+
+void JoystickControllerNode::speed_level_btn_callback() {
+    bool current_speed_level_btn_status_ = false;
+
+    switch (udp_reading_.joystick_btn_) {
+        case 2:
+            // RCLCPP_DEBUG(this->get_logger(), "- button selected");
+            current_speed_level_btn_status_ = true;
+            if (current_speed_level_btn_status_ && !prev_speed_level_btn_status_) {
+                if (speed_level_ <= 1) {
+                   speed_level_ = 1;
+                } else {
+                    speed_level_--;
+                }
+                prev_speed_level_btn_status_ = current_speed_level_btn_status_;
+            } else {
+                RCLCPP_DEBUG(this->get_logger(), "Speed Level Btn Input Duplicate.");
+            }
+            RCLCPP_DEBUG(this->get_logger(), "Set Speed Level = %d", speed_level_);
+            
+            break;
+        case 4:
+            // RCLCPP_DEBUG(this->get_logger(), "+ button selected");
+            current_speed_level_btn_status_ = true;
+            if (current_speed_level_btn_status_ && !prev_speed_level_btn_status_) {
+                if (speed_level_ >= 10) {
+                   speed_level_ = 10;
+                    RCLCPP_DEBUG(this->get_logger(), "Set Speed Level = %d", speed_level_);
+                } else {
+                    speed_level_++;
+                }
+            } else {
+                RCLCPP_DEBUG(this->get_logger(), "Speed Level Btn Input Duplicate.");
+            }
+            RCLCPP_DEBUG(this->get_logger(), "Set Speed Level = %d", speed_level_);
+            break;
+        default:
+            break;
+    }
+    current_speed_level_btn_status_ = false;
 }
 
 void JoystickControllerNode::manual_mode_sub_callback (const std_msgs::msg::Bool::SharedPtr msg) {
@@ -175,17 +217,17 @@ void JoystickControllerNode::switch_driving_mode() {
     // case 1:
     //     RCLCPP_DEBUG(this->get_logger(), "joystick button selected");
     //     break;
-    case 2:
-        set_driving_mode_status(DrivingMode::MANULFINISH);
+    // case 2:
         // RCLCPP_DEBUG(this->get_logger(), "- button selected");
-        RCLCPP_DEBUG(this->get_logger(), "Driving Mode : MANUALFINISH");
-        break;
+        // break;
     // case 4:
     //     RCLCPP_DEBUG(this->get_logger(), "+ button selected");
     //     break;
-    // case 8:
-    //     RCLCPP_DEBUG(this->get_logger(), "grid button selected");
-    //     break;
+    case 8:
+        set_driving_mode_status(DrivingMode::MANULFINISH);
+        // RCLCPP_DEBUG(this->get_logger(), "grid button selected");
+        RCLCPP_DEBUG(this->get_logger(), "Driving Mode : MANUALFINISH");
+        break;
     // case 16:
     //     RCLCPP_DEBUG(this->get_logger(), "jogging button selected");
     //     break;
