@@ -51,10 +51,10 @@ void JoystickControllerNode::speed_level_btn_callback() {
                     speed_level_--;
                 }
                 prev_speed_level_btn_status_ = current_speed_level_btn_status_;
+                RCLCPP_INFO(this->get_logger(), "Set Speed Level = %d", speed_level_);
             } else {
                 RCLCPP_DEBUG(this->get_logger(), "Speed Level Btn Input Duplicate.");
             }
-            RCLCPP_DEBUG(this->get_logger(), "Set Speed Level = %d", speed_level_);
             
             break;
         case 4:
@@ -67,10 +67,10 @@ void JoystickControllerNode::speed_level_btn_callback() {
                 } else {
                     speed_level_++;
                 }
+                RCLCPP_INFO(this->get_logger(), "Set Speed Level = %d", speed_level_);
             } else {
                 RCLCPP_DEBUG(this->get_logger(), "Speed Level Btn Input Duplicate.");
             }
-            RCLCPP_DEBUG(this->get_logger(), "Set Speed Level = %d", speed_level_);
             break;
         default:
             break;
