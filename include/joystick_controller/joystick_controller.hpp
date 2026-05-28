@@ -25,7 +25,7 @@ class JoystickControllerNode : public rclcpp::Node {
         float dt_;
         bool manual_mode_msg_;
         bool prev_speed_level_btn_status_ = false;
-        int speed_level_ = 5;
+        int speed_level_ = 1;
 
         DrivingMode current_driving_mode_;
 
