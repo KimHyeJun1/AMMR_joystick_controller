@@ -112,6 +112,8 @@ void JoystickControllerNode::manual_vel_pub_callback() {
             msg.angular.y = 0;
             if (vel_x > 0) {
                 msg.angular.z = vel_z * -1;
+            } else if (vel_x == 0) {
+                msg.angular.z = 0;
             } else {
                 msg.angular.z = vel_z;
             }
